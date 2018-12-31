@@ -12,6 +12,9 @@ The main goal is to be easier and simpler to use than `make`. I plan on this pro
     * The Buildfile syntax is intended to be easy and intuitive to use. It is still a work in progress, but currently should cover basic use cases.
 * Builds corresponding .o files for every relevant .cpp file.
 
+## Installation
+Easy installation can be done using the provided ```install.sh``` script. You may have to grant executable permissions using ```$ chmod +x install.sh``` before installing with ```$ ./install.sh```. The default name for the executable is cppb. If you wish to build the executable under a different name, then provide it as the first argument to the install script. The binary will be built and then copied to /usr/local/bin. To uninstall, remove the executable from /usr/local/bin.
+
 ## Usage
 I like to build the executable as `cppb`, which stands for cpp build. Currently, this does not accept any command line arguments. Running this will cause the Buildfile to be read and used in building the executable.
 ### Buildfile Syntax
@@ -34,7 +37,7 @@ Example:
      LINKCMD: g++ OBJECTS -o EXE
 
 # Future Changes:
-- [ ] Add in the EXE substitution for the LINKCMD
+- [x] Add in the EXE substitution for the LINKCMD
 - [ ] Add ability to say all .cpp files in current directory
 - [ ] Add ability to say all .cpp files except for certian ones
 - [ ] Add ability to have profiles. Example: a testing profile builds a different exe than a production one, or a development profile builds the same exe with a different COMPILECMD
