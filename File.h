@@ -78,6 +78,7 @@ public:
     const std::string& get_link_command(const std::vector<std::string>& object_names);
 private:
     void add_compile_arg(std::string&& arg, const std::string& source, const std::string& object);
+    void add_link_arg(std::string&& arg, const std::vector<std::string>& object_names);
     static std::string cpp_to_object(const std::string& cpp_filename);
     const char* first_alnum_char_past(const std::string& phrase) const;
     std::vector<std::string> compile_cmd;

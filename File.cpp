@@ -135,15 +135,7 @@ const string& Buildfile::get_link_command(const vector<string>& object_names) {
     string word;
     while(it != end() && *it != '\n') {
         if(isspace(*it)) {
-            if(word == "OBJECTS") {
-                for(auto& obj : object_names) {
-                    linkcmd += obj;
-                    linkcmd += ' ';
-                }
-            } else {
-                linkcmd += word;
-                linkcmd += ' ';
-            }
+            add_link_arg(move(word), object_names);
             word.clear();
         } else {
             word += *it;
@@ -151,8 +143,23 @@ const string& Buildfile::get_link_command(const vector<string>& object_names) {
         ++it;
     }
     if(!word.empty())
-        linkcmd += word + ' ';
+        add_link_arg(move(word), object_names);
     return linkcmd;
+}
+
+void Buildfile::add_link_arg(string&& arg, const vector<string>& object_names) {
+    if(arg == "OBJECTS") {
+        for(auto& obj : object_names) {
+            linkcmd += obj;
+            linkcmd += ' ';
+        }
+    } else if(arg == "EXE") {
+        linkcmd += executable_name;
+        linkcmd += ' ';
+    } else {
+        linkcmd += arg;
+        linkcmd += ' ';
+    }
 }
 
 void Buildfile::add_compile_arg(string&& arg, const string& source, const string& object) {
