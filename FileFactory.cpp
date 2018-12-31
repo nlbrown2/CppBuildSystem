@@ -1,5 +1,7 @@
-#include "File_Factory.h"
+#include "FileFactory.h"
 #include "File.h"
+#include "CppFile.h"
+#include "ObjectFile.h"
 using namespace std;
 
 const CppFile& FileFactory::get_cpp_file(const string& filename, set<string>& seen) {

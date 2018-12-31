@@ -4,8 +4,8 @@
 #include <map>
 #include <set>
 #include "Utility.h"
-class ObjectFile;
-class CppFile;
+#include "ObjectFile.h"
+#include "CppFile.h"
 class FileFactory {
 public:
     static FileFactory& get() {

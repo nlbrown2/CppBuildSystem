@@ -18,7 +18,8 @@
 #include <sys/stat.h> //for fstat
 #include <thread> //to determine number of cores
 #include "File.h"
-#include "File_Factory.h"
+#include "FileFactory.h"
+#include "Buildfile.h"
 using namespace std;
 using Stat = struct stat;
 
