@@ -2,7 +2,7 @@ CXX = g++
 CC = g++
 LD = g++
 CXXFLAGS = -std=c++1z -Wall -Werror -pedantic -g3
-PROG = main_exe
+PROG = cppb
 SRCS = $(wildcard *.cpp)
 OBJS = $(SRCS:%.cpp=%.o)
 
@@ -16,4 +16,4 @@ $(PROG): $(OBJS)
 
 clean:
 	rm -f *.o
-	rm -f *exe
+	rm -f $(PROG)

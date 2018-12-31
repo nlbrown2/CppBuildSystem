@@ -92,8 +92,6 @@ pid_t run_process(const vector<string>& args) {
 
 int main() {
     //TODO: check if buildfile is more recent then executable. If so, recompile everything and relink everything
-    //TODO: git repo bro holy shit
-    //TODO: limit number of processes to # of available cores
     //TODO: expand buildfile syntax to include all cpps or all except these cpps, etc
     //TODO: potentially introduce variables. Not sure if a good idea or not.
     Buildfile buildfile;
@@ -122,6 +120,10 @@ int main() {
             should_relink = true;
         }
     }
+    //This checks if the executable exists. If not, we have to relink
+    Stat exe_stat;
+    if(stat(buildfile.get_execuatable_name().c_str(), &exe_stat) == -1 && errno == ENOENT)
+        should_relink = true;
     if(should_relink) {
         //wait for all children to finish compiling the object files
         pid_t wpid;
