@@ -25,6 +25,7 @@ Instead of taking up two lines for the executable name and listing the .cpp file
     NAME: example1.cpp example2.cpp
 
 The names of the cpp files must be full names relative to the current directory. I have not tested multi-directory structures at this time.
+Alternatively, one could put a list of regex patterns to match against the files in the directory. For example, this can be used to include all cpps (*\.cpp). The "flavor" of regex is ECMAScript's regex.
 #### COMPILECMD
 This is used to determine what commands are issued to build individual object files. The name for the source file should be replaced with "SOURCE" and the corresponding object file replaced with "OBJECT". This command template will be used to compile every cpp file into the object file. The name of the object file is the same as the cpp file, but with the ".cpp" extension converted to ".o".
 Example:
@@ -38,10 +39,10 @@ Example:
 
 # Future Changes:
 - [x] Add in the EXE substitution for the LINKCMD
-- [ ] Add ability to say all .cpp files in current directory
-- [ ] Add ability to say all .cpp files except for certian ones
-- [ ] Add ability to have profiles. Example: a testing profile builds a different exe than a production one, or a development profile builds the same exe with a different COMPILECMD
+- [x] Add ability to say all .cpp files in current directory
+- [x] Add ability to say all .cpp files except for certian ones
 - [ ] Add ability to have multiple EXEs built.
+- [ ] Add ability to have profiles. Example: a testing profile builds a different exe than a production one, or a development profile builds the same exe with a different COMPILECMD
 - [ ] Add ability to run shell commands before/after an executable has been built.
 - [ ] Add cross-platform support
 - [ ] Add multi-level directory structure support if currently not supported
