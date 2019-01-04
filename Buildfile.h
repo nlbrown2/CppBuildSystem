@@ -3,6 +3,7 @@
 #include "MemoryMappedFile.h"
 #include <vector>
 #include <string>
+#include <regex>
 class Buildfile: public MemoryMappedFile {
 public:
     Buildfile();
@@ -29,6 +30,8 @@ private:
     std::string linkcmd;
     std::string executable_name;
     std::vector<std::string> cpps;
+    std::vector<std::regex> cpp_regexs;
+    bool filter(const std::string& filename);
     std::vector<std::string> objects;
 };
 #endif

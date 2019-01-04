@@ -1,5 +1,10 @@
 #include "Buildfile.h"
+#include "Directory.h"
+#include <regex>
+#include <iostream>
 using namespace std;
+using namespace std::placeholders;
+
 Buildfile::Buildfile() : MemoryMappedFile("Buildfile") {
     auto it = begin();
     while(!strncmp(it, "COMPILECMD", 10) || !strncmp(it, "LINKCMD", 7))
@@ -10,15 +15,29 @@ Buildfile::Buildfile() : MemoryMappedFile("Buildfile") {
         executable_name += *it++;
     while(it != end() && (isspace(*it) || *it == ':') && *it != '\n')
         ++it;
+    string regex_str;
     while(it != end() && *it != '\n') {
-        string filename;
-        while(it != end() && isspace(*it) && *it != '\n')
-            ++it; //skip leading whitespace
-        while(it != end() && !isspace(*it))
-            filename += *it++;
-        cpps.push_back(move(filename));
+        if(isspace(*it)) {
+            cpp_regexs.emplace_back(regex_str);
+            regex_str.clear();
+        }
+        else
+            regex_str += *it;
+        ++it;
     }
+    if(!regex_str.empty())
+        cpp_regexs.emplace_back(regex_str);
+
+    Directory current_dir;
+    cpps = current_dir.matching_filenames(bind(&Buildfile::filter, this, _1));
     transform(cpps.begin(), cpps.end(), back_inserter(objects), &Buildfile::cpp_to_object);
+}
+
+bool Buildfile::filter(const string& filename) {
+    for(auto& r : cpp_regexs)
+        if(regex_match(filename, r))
+            return true;
+    return false;
 }
 
 const vector<string>& Buildfile::get_compile_command(const string& source, const string& object) {
