@@ -12,3 +12,7 @@ vector<string> Directory::matching_filenames(function<bool (const string&)> pred
     return result;
     //Important: the directory is not rewound because it does not need to be for our use cases.
 }
+
+Directory::~Directory() {
+    closedir(_directory);
+}

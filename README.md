@@ -6,7 +6,7 @@ The main goal is to be easier and simpler to use than `make`. I plan on this pro
 
 ## Features
 * Automatic header file scanning
-   * Will scan all ```#include "Example.h"``` headers for each target. This scanning includes scanning all includes as well. Therefore, if a header nested layers deep is changed, all corresponding object files will be rebuilt as well as the executable being relinked.
+   * Will scan all ```#include "Example.h"``` headers for each target. Every included file is also scanned to build out the full dependency tree. Therefore, if a header nested layers deep is changed, all corresponding object files will be rebuilt as well as the executable being relinked.
 * Automatically uses a process pool as large as the number of cores on the current machine.
 * Customizable and simple compilation and link commands.
     * The Buildfile syntax is intended to be easy and intuitive to use. It is still a work in progress, but currently should cover basic use cases.
@@ -39,8 +39,8 @@ Example:
 
 # Future Changes:
 - [x] Add in the EXE substitution for the LINKCMD
-- [x] Add ability to say all .cpp files in current directory
-- [x] Add ability to say all .cpp files except for certian ones
+- [x] Add ability to say all .cpp files in current directory (accomplished with regex)
+- [x] Add ability to say all .cpp files except for certian ones (accomplished with regex)
 - [ ] Add ability to have multiple EXEs built.
 - [ ] Add ability to have profiles. Example: a testing profile builds a different exe than a production one, or a development profile builds the same exe with a different COMPILECMD
 - [ ] Add ability to run shell commands before/after an executable has been built.

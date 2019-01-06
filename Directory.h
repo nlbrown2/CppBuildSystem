@@ -9,6 +9,7 @@ class Directory {
 public:
     Directory(const std::string& path = ".");
     std::vector<std::string> matching_filenames(std::function<bool (const std::string&)> predicate);
+    ~Directory();
 private:
     DIR* _directory;
 };
