@@ -1,3 +1,8 @@
-COMPILECMD: g++ -std=c++1z -c SOURCE -o OBJECT
-cppb: .*e\.cpp|Directory\.cpp main.cpp File.cpp FileFactory.cpp CppFile.cpp MemoryMappedFile.cpp ObjectFile.cpp Buildfile.cpp Utility.cpp
-LINKCMD: g++ -std=c++1z -pedantic OBJECTS -o EXE
+default:
+    COMPILECMD: g++ -std=c++1z -g3 -c SOURCE -o OBJECT
+    cppb: .*\.cpp
+    LINKCMD: g++ -std=c++1z -pedantic -g3 OBJECTS -o EXE
+prod:
+    COMPILECMD: g++ -std=c++1z -O3 -c SOURCE -o OBJECT
+    cppb: .*\.cpp
+    LINKCMD: g++ -std=c++1z -pedantic -O3 OBJECTS -o EXE

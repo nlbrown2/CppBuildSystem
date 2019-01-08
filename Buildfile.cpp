@@ -5,12 +5,24 @@
 using namespace std;
 using namespace std::placeholders;
 
-Buildfile::Buildfile() : MemoryMappedFile("Buildfile") {
+auto Buildfile::skip_past_first_alnum(iterator it, iterator end) const -> iterator  {
+    auto res = skip_past(it, end);
+    return skip_leading_whitespace(res, end);
+}
+
+Buildfile::Buildfile(const string_view& profile) : MemoryMappedFile("Buildfile"), profile_(profile) {
     auto it = begin();
+    if(!profile.empty()) {
+        while(strncmp(it, profile.data(), profile.length()))
+            it = skip_past(it, end()); //scan forward until we determine the start of the desired profile
+        it = skip_past(it, end()); //skip line of profile
+    }
+    it = skip_leading_whitespace(it, end());
     while(!strncmp(it, "COMPILECMD", 10) || !strncmp(it, "LINKCMD", 7))
-        it = skip_past(it, end()); //skip lines that begin with COMPILECMD or LINKCMD
+        it = skip_past_first_alnum(it, end()); //skip lines that begin with COMPILECMD or LINKCMD
     if(it == end())
         throw runtime_error("No executable name found!");
+    it = skip_leading_whitespace(it, end());
     while(it != end() && *it != ':') //read from beginning of line until ':'
         executable_name += *it++;
     while(it != end() && (isspace(*it) || *it == ':') && *it != '\n')
@@ -120,10 +132,29 @@ string Buildfile::cpp_to_object(const string& cpp_filename) {
 
 const char* Buildfile::first_alnum_char_past(const string& phrase) const {
     auto it = begin();
-    while(strncmp(it, phrase.c_str(), phrase.size()))
+    it = skip_to_profile();
+    it = skip_leading_whitespace(it, end());
+    while(strncmp(it, phrase.c_str(), phrase.size())) {
         it = skip_past(it, end()); //move it to begin at line of phrase
+        it = skip_leading_whitespace(it, end());
+    }
     it = skip_past(it, end(), ':');
     while(it != end() && isspace(*it) && *it != '\n')
         ++it; //skip all whitespace that is not the end of the line
+    return it;
+}
+
+auto Buildfile::skip_to_profile() const -> iterator {
+    auto it = begin();
+    if(!profile_.empty()) {
+        while(strncmp(it, profile_.data(), profile_.length()))
+            it = skip_past(it, end()); //scan forward until we determine the start of the desired profile
+    }
+    return it;
+}
+
+auto Buildfile::skip_leading_whitespace(iterator it, iterator end) const -> iterator {
+    while(it != end && isspace(*it))
+        ++it;
     return it;
 }

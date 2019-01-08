@@ -91,11 +91,14 @@ pid_t run_process(const vector<string>& args) {
     return pid;
 }
 
-int main() {
+int main(int argc, char** argv) {
     //TODO: check if buildfile is more recent then executable. If so, recompile everything and relink everything
-    //TODO: expand buildfile syntax to include all cpps or all except these cpps, etc
-    //TODO: potentially introduce variables. Not sure if a good idea or not.
-    Buildfile buildfile;
+    string_view profile = "default";
+    if(--argc) {
+        //user has specified a profile to be used
+        profile = *++argv; //do ++ to skip past executable name
+    }
+    Buildfile buildfile{profile};
     const vector<string>& cpp = buildfile.get_cpp_filenames();
     const vector<string>& objects = buildfile.get_object_filenames();
     int cores = thread::hardware_concurrency();
