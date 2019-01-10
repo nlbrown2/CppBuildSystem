@@ -91,7 +91,7 @@ pid_t run_process(const vector<string>& args) {
     return pid;
 }
 
-int main() {
+int main(int argc, char**) {
     //TODO: check if buildfile is more recent then executable. If so, recompile everything and relink everything
     //TODO: expand buildfile syntax to include all cpps or all except these cpps, etc
     //TODO: potentially introduce variables. Not sure if a good idea or not.
@@ -137,6 +137,8 @@ int main() {
         }
         cout << buildfile.get_link_command(objects) << endl;
         system(buildfile.get_link_command(objects).c_str());
+        if(!buildfile.get_postlink_command().empty() && !--argc)
+            system(buildfile.get_postlink_command().c_str());
         return 0;
     }
 }

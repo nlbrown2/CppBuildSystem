@@ -1,1 +1,1 @@
-make; rm *.o; time ./cppb; make clean; time make -j 8;
+make; rm *.o; time ./cppb nopostcmd; make clean; time make -j 8;
