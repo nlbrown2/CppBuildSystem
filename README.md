@@ -37,6 +37,9 @@ Example:
 
      LINKCMD: g++ OBJECTS -o EXE
 
+#### POSTCMD
+The string after the : on this line will be executed in a shell after linking occurs. If linking does not need to occur, then the command won't run.
+
 # Future Changes:
 - [x] Add in the EXE substitution for the LINKCMD
 - [x] Add ability to say all .cpp files in current directory (accomplished with regex)

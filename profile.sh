@@ -1,1 +1,1 @@
-make; rm *.o; time ./cppb; make clean; time make -j 8;
+make; rm *.o; echo "Running cppb"; time ./cppb -n prod; echo "Done"; make clean; time make -j 8;

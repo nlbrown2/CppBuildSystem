@@ -94,9 +94,15 @@ pid_t run_process(const vector<string>& args) {
 int main(int argc, char** argv) {
     //TODO: check if buildfile is more recent then executable. If so, recompile everything and relink everything
     string_view profile = "default";
+    bool run_postcmd = true;
     if(--argc) {
-        //user has specified a profile to be used
-        profile = *++argv; //do ++ to skip past executable name
+        if(!strcmp(*++argv, "--nopostcmd") || !strcmp(*argv, "-n")) {
+          run_postcmd = false;
+          ++argv;
+        }
+        if(*argv)
+          //user has specified a profile to be used
+          profile = *argv; //do ++ to skip past executable name
     }
     Buildfile buildfile{profile};
     const vector<string>& cpp = buildfile.get_cpp_filenames();
@@ -140,6 +146,10 @@ int main(int argc, char** argv) {
         }
         cout << buildfile.get_link_command(objects) << endl;
         system(buildfile.get_link_command(objects).c_str());
+        if(!buildfile.get_postlink_command().empty() && run_postcmd) {
+            cout << "running: " << buildfile.get_postlink_command() << endl;
+            system(buildfile.get_postlink_command().c_str());
+        }
         return 0;
     }
 }
