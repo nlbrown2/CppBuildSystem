@@ -1,1 +1,1 @@
-make; rm *.o; echo "Running cppb"; time ./cppb -n prod; echo "Done"; make clean; time make -j 8;
+echo "Make -O3:"; make clean > /dev/null; time make -j 8 release > /dev/null; rm *.o; echo "cppb prod"; time ./cppb -n prod > /dev/null; make clean > /dev/null; echo "make -g3"; time make -j 8 > /dev/null; rm *.o; echo "cppb -g3"; time ./cppb -n > /dev/null;

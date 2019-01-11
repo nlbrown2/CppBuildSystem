@@ -1,7 +1,8 @@
 CXX = g++
 CC = g++
 LD = g++
-CXXFLAGS = -std=c++1z -Wall -Werror -pedantic -g3
+debug_or_optimize = -g3
+CXXFLAGS = -std=c++1z -Wall -Werror -pedantic $(debug_or_optimize)
 PROG = cppb
 SRCS = $(wildcard *.cpp)
 OBJS = $(SRCS:%.cpp=%.o)
@@ -13,6 +14,9 @@ default: $(PROG)
 
 $(PROG): $(OBJS)
 	$(LD) $(LDFLAGS) $(OBJS) -o $(PROG)
+
+release: debug_or_optimize = -O3
+release: $(PROG)
 
 clean:
 	rm -f *.o
