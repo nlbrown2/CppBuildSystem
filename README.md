@@ -45,7 +45,8 @@ The string after the : on this line will be executed in a shell after linking oc
 - [x] Add ability to say all .cpp files in current directory (accomplished with regex)
 - [x] Add ability to say all .cpp files except for certian ones (accomplished with regex)
 - [ ] Add ability to have multiple EXEs built.
-- [ ] Add ability to have profiles. Example: a testing profile builds a different exe than a production one, or a development profile builds the same exe with a different COMPILECMD
+- [X] Add ability to have profiles. Example: a testing profile builds a different exe than a production one, or a development profile builds the same exe with a different COMPILECMD
+- [ ] Speed up with own regex implementation using NFA. This will remove backreference support.
 - [ ] Add ability to run shell commands before/after an executable has been built.
 - [ ] Add cross-platform support
 - [ ] Add multi-level directory structure support if currently not supported
