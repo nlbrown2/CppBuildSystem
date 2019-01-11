@@ -1,8 +1,7 @@
 #ifndef FILE_FACTORY_H
 #define FILE_FACTORY_H
 #include <string>
-#include <map>
-#include <set>
+#include <unordered_map>
 #include "Utility.h"
 #include "ObjectFile.h"
 #include "CppFile.h"
@@ -16,8 +15,8 @@ public:
     const CppFile& get_cpp_file(const std::string& filename);
     const ObjectFile& get_obj_file(const std::string& filename);
 private:
-    std::map<std::string, CppFile> name_to_cppfile;
-    std::map<std::string, ObjectFile> name_to_objfile;
+    std::unordered_map<std::string, CppFile> name_to_cppfile;
+    std::unordered_map<std::string, ObjectFile> name_to_objfile;
     FileFactory() = default;
     ~FileFactory() = default;
 };
